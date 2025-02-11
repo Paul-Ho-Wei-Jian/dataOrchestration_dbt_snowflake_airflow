@@ -15,9 +15,21 @@ Make sure you have the following libraries installed in your virtual environment
 ## **1. Clone the Repository**  
 ```bash
 git clone <repository-url>
-cd <project-folder>```
-
-## **2. Clone the Repository**
+cd <project-folder>
+```
+## **4. Set up Astronomer (Airflow)**
+### **4.1 Initialise your airflow project**
+```bash
+astro dev init
+```
+### **4.2 Start Airflow locally **
+```bash
+Astro dev start
+```
+- Default credentials (Username - admin, Password admin)
+### ** 4.3 In the airflow UI, find dbt_dag **
+### ** 4.4 Trigger the DAG manually **
+### ** 4.5 Monitor the task execution and check logs for debugging if needed **
 
 ## **Key Features**
 - **Data Extraction**: Loaded data from a Snowflake sample dataset.
