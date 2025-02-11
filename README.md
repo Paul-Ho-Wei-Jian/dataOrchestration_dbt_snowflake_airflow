@@ -13,13 +13,40 @@ Make sure you have the following libraries installed in your virtual environment
 - **[Astronomer](https://www.astronomer.io/)** (for Airflow orchestration)  
 - **[dbt](https://www.getdbt.com/)** (for data transformations)  
 - **[Snowflake Connector](https://docs.snowflake.com/en/user-guide/python-connector)** (for database connection)
+  
+## 2️⃣ Setup Snowflake Online
+```sql
+  -- create accounts
+use role accountadmin;
 
-## 2️⃣ Clone the Repository  
+create warehouse dbt_wh with warehouse_size='x-small';
+create database if not exists dbt_db;
+create role if not exists dbt_role;
+
+show grants on warehouse dbt_wh;
+
+grant role dbt_role to user <username> ;
+grant usage on warehouse dbt_wh to role dbt_role;
+grant all on database dbt_db to role dbt_role;
+
+use role dbt_role;
+
+create schema if not exists dbt_db.dbt_schema;
+
+-- clean up
+use role accountadmin;
+
+drop warehouse if exists dbt_wh;
+drop database if exists dbt_db;
+drop role if exists dbt_role;
+```
+
+## 3️⃣ Clone the Repository  
 ```bash
 git clone <repository-url>
 cd <project-folder>
 ```
-## 3️⃣ Configure Snowflake Connection
+## 4️⃣ Configure Snowflake Connection
 Since this project uses Snowflake:
 
 Create a profiles.yml file (if not already present):
@@ -42,7 +69,7 @@ snowflake_project:
       client_session_keep_alive: false
 ```
 
-## 4️⃣ Set up Astronomer (Airflow) 
+## 5️⃣ Set up Astronomer (Airflow) 
 ### Initialise your airflow project
 ```bash
 astro dev init
