@@ -4,6 +4,21 @@ This project demonstrates an end-to-end data pipeline that integrates **Snowflak
 
 ---
 
+# **Project Setup Instructions**  
+
+## **Prerequisites**  
+Make sure you have the following libraries installed in your virtual environment:  
+- **[Astronomer](https://www.astronomer.io/)** (for Airflow orchestration)  
+- **[dbt](https://www.getdbt.com/)** (for data transformations)  
+- **[Snowflake Connector](https://docs.snowflake.com/en/user-guide/python-connector)** (for database connection)
+
+## **1. Clone the Repository**  
+```bash
+git clone <repository-url>
+cd <project-folder>```
+
+## **2. Clone the Repository**
+
 ## **Key Features**
 - **Data Extraction**: Loaded data from a Snowflake sample dataset.
 - **Transformations with dbt**:
