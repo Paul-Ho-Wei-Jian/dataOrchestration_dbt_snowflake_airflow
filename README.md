@@ -8,18 +8,41 @@ This project is a data pipeline that extracts sample data from Snowflake, loads 
 
 # Project Setup Instructions  
 
-## **Prerequisites**  
+## 1️⃣ Prerequisites  
 Make sure you have the following libraries installed in your virtual environment:  
 - **[Astronomer](https://www.astronomer.io/)** (for Airflow orchestration)  
 - **[dbt](https://www.getdbt.com/)** (for data transformations)  
 - **[Snowflake Connector](https://docs.snowflake.com/en/user-guide/python-connector)** (for database connection)
 
-## Clone the Repository  
+## 2️⃣ Clone the Repository  
 ```bash
 git clone <repository-url>
 cd <project-folder>
 ```
-## Set up Astronomer (Airflow) 
+## 3️⃣ Configure Snowflake Connection
+Since this project uses Snowflake:
+
+Create a profiles.yml file (if not already present):
+Location: ~/.dbt/profiles.yml
+```bash
+Add your Snowflake credentials:
+snowflake_project:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: <your_account>
+      user: <your_username>
+      password: <your_password>
+      role: <your_role>
+      database: <your_database>
+      warehouse: <your_warehouse>
+      schema: <your_schema>
+      threads: 10
+      client_session_keep_alive: false
+```
+
+## 4️⃣ Set up Astronomer (Airflow) 
 ### Initialise your airflow project
 ```bash
 astro dev init
