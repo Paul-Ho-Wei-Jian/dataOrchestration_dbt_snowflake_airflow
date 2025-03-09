@@ -92,17 +92,16 @@ Your data pipeline is now set up, extracting data from snowflake, transforming i
 .
 ├── models/
 │   ├── marts/          # Business-ready models (fact and dimension tables)
-│   │   ├── fact_sales.sql
-│   │   ├── dim_customers.sql
-│   │   └── dim_products.sql
+│   │   ├── fct_orders.sql
+│   │   ├── int_order_items.sql
+│   │   └── int_order_items_summary.sql
+│   │   └── generic_tests.yml
 │   ├── staging/        # Source-aligned staging models
-│   │   ├── stg_orders.sql
-│   │   ├── stg_customers.sql
-│   │   └── stg_products.sql
+│   │   ├── stg_tpch_line_items.sql
+│   │   ├── stg_tpch_orders.sql
+│   │   └── tpch_sources.yml
 │   └── macros/         # Reusable functions and utilities
-│       └── clean_email.sql
-└── airflow/
-    └── dags/
+│       └── pricing.sql
 ```
 
 ## Reflection
