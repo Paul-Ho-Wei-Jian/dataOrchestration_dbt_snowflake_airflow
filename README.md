@@ -13,7 +13,7 @@ Both singular and generic tests were implemented to validate data quality. A sin
 Finally, Apache Airflow was used to automate the pipeline.
 
 ## Project Screen Shot(s)
-
+![DFD](DFD.png)
 ![Airflow Graph](Airflow_DAG.png)
 ![Dbt_run_results](dbt_run.png)
 
