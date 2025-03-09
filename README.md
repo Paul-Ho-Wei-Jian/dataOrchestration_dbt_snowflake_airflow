@@ -14,6 +14,8 @@ Finally, Apache Airflow was used to automate the pipeline.
 
 ## Project Screen Shot(s)
 
+![Airflow Graph](Airflow_DAG.png)
+
 ---
 
 ## Project Structure
