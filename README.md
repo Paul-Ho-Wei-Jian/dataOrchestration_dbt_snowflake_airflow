@@ -1,4 +1,16 @@
-# ELT Data Pipeline with Snowflake, dbt, and Airflow
+# ELT Data Pipeline with dbt, snowflake and Airflow
+
+This is an ELT project where I extracted and loaded sample datasets on snowflake, I materialized my original / raw data as a view in the staging folder, saving storage space since views do not physically store data. To enforce referential integrity, I made used of dbt's in-built function to create a surrogate key.
+
+Next for the transformation portion, I created 2 intermediary tables where I performed aggregation and JOINS. 
+
+This tables sits between the staging models and the final fact tables. 
+
+Instead of writing 1 huge SQL query, INT tables helps to break it into smaller, modular models, pre-computing expensive joins, calculations and aggregations before using them in my final fact table. 
+
+I also created a macros that calculates the discounted amount and discount percentage. Macros helps me to avoid repeating the same SQL logic and allows me to update my logic in 1 place instead of multiple models
+
+
 
 This project is a data pipeline that extracts sample data from Snowflake, loads it into the data warehouse, transforms it with dbt’s modular SQL models, and automates the process using Airflow.
 
