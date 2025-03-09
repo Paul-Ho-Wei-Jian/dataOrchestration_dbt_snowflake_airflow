@@ -1,22 +1,37 @@
 # ELT Data Pipeline with dbt, snowflake and Airflow
 
-This is an ELT project where I extracted and loaded sample datasets on snowflake, I materialized my original / raw data as a view in the staging folder, saving storage space since views do not physically store data. To enforce referential integrity, I made used of dbt's in-built function to create a surrogate key.
+This ELT project involved extracting and loading sample datasets into Snowflake. I materialized my original/raw data as a view in the staging folder, optimizing storage since views do not physically store data. To enforce referential integrity, I utilized dbt's built-in function to create a surrogate key.
 
-Next for the transformation portion, I created 2 intermediary tables where I performed aggregation and JOINS. 
+For transformation, I created two intermediary (Int) tables where I performed aggregations and joins. These tables sit between the staging models and the final fact tables.
 
-This tables sits between the staging models and the final fact tables. 
+Instead of writing one large SQL query, Int tables help break down my queries into smaller, modular models. They pre-compute expensive joins, calculations, and aggregations before being used in the final fact table.
 
-Instead of writing 1 huge SQL query, INT tables helps to break it into smaller, modular models, pre-computing expensive joins, calculations and aggregations before using them in my final fact table. 
+I also created a macro to calculate the discounted amount and discount percentage. Macros help eliminate redundant SQL logic and allow updates to be made in a single place rather than across multiple models.
 
-I also created a macros that calculates the discounted amount and discount percentage. Macros helps me to avoid repeating the same SQL logic and allows me to update my logic in 1 place instead of multiple models
+Both singular and generic tests were implemented to validate data quality. A singular test ensures that order dates fall within an acceptable range, while generic tests leverage dbt's built-in functions to check for uniqueness, null values, and referential integrity constraints on foreign keys.
 
-
-
-This project is a data pipeline that extracts sample data from Snowflake, loads it into the data warehouse, transforms it with dbt’s modular SQL models, and automates the process using Airflow.
+Finally, Apache Airflow was used to automate the pipeline.
 
 ## Project Screen Shot(s)
 
 ---
+
+## Project Structure
+```plaintext
+.
+├── models/
+│   ├── marts/          # Business-ready models (fact and dimension tables)
+│   │   ├── fct_orders.sql
+│   │   ├── int_order_items.sql
+│   │   └── int_order_items_summary.sql
+│   │   └── generic_tests.yml
+│   ├── staging/        # Source-aligned staging models
+│   │   ├── stg_tpch_line_items.sql
+│   │   ├── stg_tpch_orders.sql
+│   │   └── tpch_sources.yml
+│   └── macros/         # Reusable functions and utilities
+│       └── pricing.sql
+```
 
 # Project Setup Instructions  
 
@@ -98,30 +113,3 @@ Astro dev start
 Your data pipeline is now set up, extracting data from snowflake, transforming it with dbt, and orchestrating workflows using airflow via Astronomer
 
 ---
-
-## Project Structure
-```plaintext
-.
-├── models/
-│   ├── marts/          # Business-ready models (fact and dimension tables)
-│   │   ├── fct_orders.sql
-│   │   ├── int_order_items.sql
-│   │   └── int_order_items_summary.sql
-│   │   └── generic_tests.yml
-│   ├── staging/        # Source-aligned staging models
-│   │   ├── stg_tpch_line_items.sql
-│   │   ├── stg_tpch_orders.sql
-│   │   └── tpch_sources.yml
-│   └── macros/         # Reusable functions and utilities
-│       └── pricing.sql
-```
-
-## Reflection
-This is a code-along tutorial that I recently completed, driven by my interest in working with new technologies and leveraging the massive computational power of cloud data warehouses, where data transformations are handled directly within the data warehouse. This project covers industry-relevant software engineering concepts such as modular, reusable SQL models and data modeling techniques like fact tables based on the star schema. Additionally, Airflow is used to visualize the DAG (Directed Acyclic Graph) workflow, clearly illustrating the sequence and dependencies of tasks to be executed.
-
-I found that dbt (Data Build Tool) truly shines when working with structured data in modern data warehouses, offering simplicity, scalability, and maintainability. Here are some of the features in dbt that I found particularly useful:
-
-Automatic Data Lineage and Documentation: dbt generates data lineage graphs and documentation, showing how datasets are connected.
-Modular Approach: dbt breaks down transformations into small, reusable SQL models, promoting code reusability and maintainability.
-Built-in Data Quality Testing: dbt supports data quality tests (e.g., uniqueness, non-null constraints, and referential integrity) through simple YAML configuration files.
-Dbt built-in data quality testing (Uniqueness, not null, referential integrity) with simple YAML configs file
